@@ -7,6 +7,28 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "TwitterClient.h"
+
+//Implementing Categories
+//convinient helper
+@implementation NSURL (dictionaryFromQueryString)
+-(NSDictionary *) dictionaryFromQueryString{
+    
+    NSString *query = [self query];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:0];
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [dict setObject:val forKey:key];
+    }
+    return dict;
+}
+@end
 
 @implementation AppDelegate
 
@@ -17,6 +39,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    self.window.rootViewController = [[LoginViewController alloc] init];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -144,6 +168,44 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+//callback
+//whenever your application comes in via an url request, it comes through this application delegate end point.
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation{
+    
+    if ([url.scheme isEqualToString:@"cptwitter"]){
+        if ([url.host isEqualToString:@"oauth"]){
+            NSDictionary *parameters = [url dictionaryFromQueryString];
+            //extract parameters from query string
+            if (parameters[@"oauth_token"] && parameters[@"oauth_verifier"]){
+                TwitterClient *client = [TwitterClient instance];
+                
+                [client fetchAccessTokenWithPath:@"/oauth/access_token"
+                                          method:@"POST"
+                                    requestToken:[BDBOAuthToken tokenWithQueryString:url.query]
+                                         success:^(BDBOAuthToken *accessToken){
+                                             NSLog(@"access token"); 
+                                             //saving access token
+                                             //putting access token into keychain
+                                             [client.requestSerializer saveAccessToken:accessToken];
+                                             
+                                             [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                 NSLog(@"response %@", responseObject);
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"response error");
+                                             }];
+                                         }
+                                         failure:^(NSError *error){
+                                             NSLog(@"access token error %@", [error description] );
+                                         }];
+            }
+        }
+        return YES;
+    }
+    return NO;
 }
 
 @end
