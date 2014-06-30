@@ -137,6 +137,7 @@
 		9740D3ED195FC0E800A8CF87 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				9740D42F19609D3000A8CF87 /* API */,
 				9740D3F6195FC0E800A8CF87 /* AppDelegate.h */,
 				9740D3F7195FC0E800A8CF87 /* AppDelegate.m */,
 				9740D3FC195FC0E800A8CF87 /* Images.xcassets */,
@@ -145,8 +146,6 @@
 				9740D41A195FC14000A8CF87 /* LoginViewController.h */,
 				9740D41B195FC14000A8CF87 /* LoginViewController.m */,
 				9740D41C195FC14000A8CF87 /* LoginViewController.xib */,
-				9740D41F195FC1C300A8CF87 /* TwitterClient.h */,
-				9740D420195FC1C300A8CF87 /* TwitterClient.m */,
 				9740D427195FEEEB00A8CF87 /* TweetsViewController.h */,
 				9740D428195FEEEB00A8CF87 /* TweetsViewController.m */,
 				9740D429195FEEEB00A8CF87 /* TweetsViewController.xib */,
@@ -183,6 +182,15 @@
 				9740D40D195FC0E800A8CF87 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9740D42F19609D3000A8CF87 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9740D41F195FC1C300A8CF87 /* TwitterClient.h */,
+				9740D420195FC1C300A8CF87 /* TwitterClient.m */,
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

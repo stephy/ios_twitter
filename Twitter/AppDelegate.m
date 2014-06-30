@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TwitterClient.h"
+#import "TweetsViewController.h"
+#import "User.h"
 
 //Implementing Categories
 //convinient helper
@@ -40,7 +42,15 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[LoginViewController alloc] init];
+    if([User currentUser] == nil){
+        //load login screen
+        self.window.rootViewController = [[LoginViewController alloc] init];
+    }else{
+        //load timeline screen
+        TwitterClient *client = [TwitterClient instance];
+        [self loadTimeline:client];
+    }
+    
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -192,11 +202,32 @@
                                              //putting access token into keychain
                                              [client.requestSerializer saveAccessToken:accessToken];
                                              
-                                             [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                 NSLog(@"response %@", responseObject);
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"response error");
-                                             }];
+                                             //if no user has been saved
+                                             if ([User currentUser] == nil){
+                                                 //set current user
+                                                 [client getUserWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                     
+                                                     NSLog(@"saving user");
+                                                     NSLog(@"Setting user %@", responseObject);
+                                                     //set current user
+                                                     [[User alloc] setCurrentUser:responseObject];
+                                                     
+                                                     //load timeline
+                                                     NSLog(@"loading timeline after saving user");
+                                                     [self loadTimeline:client];
+                                                     
+                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                     NSLog(@"error logging user %@", [error description]);
+                                                 }];
+                                             }else{
+                                                 //load timeline
+                                                 NSLog(@"user already saved, loading timeline");
+                                                 [self loadTimeline:client];
+                                             }
+                                             
+                                             
+                                             
+
                                          }
                                          failure:^(NSError *error){
                                              NSLog(@"access token error %@", [error description] );
@@ -206,6 +237,20 @@
         return YES;
     }
     return NO;
+}
+
+- (void)loadTimeline:(TwitterClient *)client{
+    [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"loaded timeline with success");
+        //NSLog(@"hometimeline response %@", responseObject);
+        TweetsViewController *mvc = [[TweetsViewController alloc] init];
+        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
+        self.window.rootViewController = nvc;
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"hometimeline response error");
+    }];
 }
 
 @end

@@ -8,10 +8,10 @@
 
 #import "LoginViewController.h"
 #import "TwitterClient.h"
+#import "User.h"
+
 @interface LoginViewController ()
 - (IBAction)onLoginButton:(id)sender;
-
-
 
 @end
 
@@ -22,6 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    
     }
     return self;
 }

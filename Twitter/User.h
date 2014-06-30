@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface User : NSObject
-//+ (User *)currentUser;
-//- (void)setCurrentUser;
+
+@property (strong, nonatomic) NSString *screen_name;
+@property (strong, nonatomic) NSString *language;
+
++ (User *)currentUser;
+- (void)setCurrentUser:(id)responseObject;
+- (id)initWithDictionary: (NSDictionary *)dictionary;
+
+
 @end

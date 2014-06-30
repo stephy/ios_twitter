@@ -7,6 +7,8 @@
 //
 
 #import "TweetsViewController.h"
+#import "TwitterClient.h"
+#import "User.h"
 
 @interface TweetsViewController ()
 
