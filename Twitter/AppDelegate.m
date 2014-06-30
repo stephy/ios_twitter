@@ -244,9 +244,9 @@
         NSLog(@"loaded timeline with success");
         //NSLog(@"hometimeline response %@", responseObject);
         TweetsViewController *mvc = [[TweetsViewController alloc] init];
+        mvc.timeline = responseObject;
         UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
         self.window.rootViewController = nvc;
-        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"hometimeline response error");
