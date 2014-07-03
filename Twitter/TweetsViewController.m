@@ -7,12 +7,17 @@
 //
 
 #import "TweetsViewController.h"
-#import "TwitterClient.h"
-#import "TweetCell.h"
-#import <AFNetworking/UIKit+AFNetworking.h>
+#import "TweetViewController.h"
+
+int const BAR_HEIGHT = 40;
+int const BAR_WIDTH = 230;
+int const BUTTON_HEIGHT = 40;
+int const BUTTON_WIDTH = 70;
 
 @interface TweetsViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UIButton *addTweetButton;
+@property (strong, nonatomic) UIButton *signoutButton;
 
 @end
 
@@ -30,13 +35,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
+    UIColor *mainColor = [UIColor colorWithRed:0.212 green:0.212 blue:0.192 alpha:1]; /*#363631*/
+    
+    //creating signout button
+    self.signoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, BUTTON_WIDTH, BUTTON_HEIGHT)];
+    [self.signoutButton setTitle:@"Sign Out" forState:UIControlStateNormal];
+    [self.signoutButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    //creating button to add a new tweet
+    self.addTweetButton = [[UIButton alloc] initWithFrame:CGRectMake(250, 0.0, BUTTON_WIDTH, BUTTON_HEIGHT)];
+    [self.addTweetButton setTitle:@"New" forState:UIControlStateNormal];
+    [self.addTweetButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    
+    //adding action to buttons
+    [self.addTweetButton addTarget:self action:@selector(onAddTweetButton) forControlEvents:UIControlEventTouchDown];
+    [self.signoutButton addTarget:self action:@selector(onSignoutButton) forControlEvents:UIControlEventTouchDown];
+    //creating a view
+    UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300, BAR_HEIGHT)];
+    
+    [barView addSubview:self.signoutButton];
+    [barView addSubview:self.addTweetButton];
+    
+    self.navigationItem.titleView = barView;
+
     //load personalized cell
     //registration process
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"TweetCell"];
     //set row height
     self.tableView.rowHeight = 120;
+    
+    //change navigation controller color
+    self.navigationController.navigationBar.barTintColor = mainColor;
     
 }
 
@@ -57,7 +86,7 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     
     NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
-    NSLog(@"tweet: %@", tweet);
+    //NSLog(@"tweet: %@", tweet);
     cell.name_label.text = tweet[@"user"][@"name"];
     NSMutableString *screen_name = [[NSMutableString alloc]init];
     [screen_name appendString:@"@"];
@@ -112,5 +141,38 @@
     }
     return returnDate;
 }
+
+//on row click open detailed view
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //dismiss keyboard
+    
+    NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
+
+    TweetViewController *tvc = [[TweetViewController alloc] initWithNibName:@"TweetViewController" bundle:[NSBundle mainBundle]];
+    tvc.currentTweet = tweet;
+    [self.navigationController pushViewController:tvc animated:YES];
+}
+
+
+- (void)onAddTweetButton{
+    NSLog(@"clicked on add new tweet");
+    AddNewTweetViewController *newTweetViewController =[[AddNewTweetViewController alloc] init];
+    //newTweetViewController.currentClient = client;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:newTweetViewController];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)onSignoutButton{
+    NSLog(@"signing out");
+    
+    //set current user to nil
+    [[User alloc] setCurrentUser:nil];
+    
+    //load login page
+    LoginViewController *lvc = [[LoginViewController alloc] init];
+    [self presentViewController:lvc animated:YES completion:nil];
+    
+}
+
 
 @end

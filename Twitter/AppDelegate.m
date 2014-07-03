@@ -38,6 +38,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -206,14 +207,12 @@
                                              if ([User currentUser] == nil){
                                                  //set current user
                                                  [client getUserWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                     
                                                      NSLog(@"saving user");
-                                                     NSLog(@"Setting user %@", responseObject);
+                                                    // NSLog(@"Setting user %@", responseObject);
                                                      //set current user
                                                      [[User alloc] setCurrentUser:responseObject];
                                                      
                                                      //load timeline
-                                                     NSLog(@"loading timeline after saving user");
                                                      [self loadTimeline:client];
                                                      
                                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -221,7 +220,7 @@
                                                  }];
                                              }else{
                                                  //load timeline
-                                                 NSLog(@"user already saved, loading timeline");
+                                                 //NSLog(@"user already saved, loading timeline");
                                                  [self loadTimeline:client];
                                              }
                                              
@@ -242,14 +241,18 @@
 - (void)loadTimeline:(TwitterClient *)client{
     [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"loaded timeline with success");
-        //NSLog(@"hometimeline response %@", responseObject);
         TweetsViewController *mvc = [[TweetsViewController alloc] init];
         mvc.timeline = responseObject;
         UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
         self.window.rootViewController = nvc;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"hometimeline response error");
+        
+        NSLog(@"homeTimeline response error");
+        TweetsViewController *mvc = [[TweetsViewController alloc] init];
+        mvc.timeline = nil;
+        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
+        self.window.rootViewController = nvc;
     }];
 }
 

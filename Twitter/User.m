@@ -29,7 +29,6 @@ static User *currentUser = nil;
 
 - (void)setCurrentUser:(id)response{
     currentUser = [[User alloc] initWithDictionary:response];
-    
     NSDictionary *dictionary = [[NSDictionary alloc] initWithDictionary:response];
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];

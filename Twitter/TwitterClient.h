@@ -11,11 +11,26 @@
 @interface TwitterClient : BDBOAuth1RequestOperationManager
 
 #pragma mark Initialization
+
++ (NSString*)encodeURL:(NSString *)string;
 + (TwitterClient *)instance;
+
 - (void)login;
 - (AFHTTPRequestOperation *)homeTimelineWithSuccess: (void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure: (void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 - (AFHTTPRequestOperation *)getUserWithSuccess: (void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                        failure: (void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)favoritesDestroyId: (NSString *)tweetId
+                                       success: (void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure: (void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)favoritesCreateId: (NSString *)tweetId
+                                      success: (void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure: (void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)tweetWithText: (NSString *)tweetText
+                                  success: (void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                  failure: (void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

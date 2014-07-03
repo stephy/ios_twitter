@@ -34,6 +34,10 @@
 		9740D4381961108500A8CF87 /* 01-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 9740D4351961108500A8CF87 /* 01-refresh.png */; };
 		9740D4391961108500A8CF87 /* 02-redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9740D4361961108500A8CF87 /* 02-redo.png */; };
 		9740D43A1961108500A8CF87 /* 28-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 9740D4371961108500A8CF87 /* 28-star.png */; };
+		9740D43E196128AD00A8CF87 /* AddNewTweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9740D43C196128AD00A8CF87 /* AddNewTweetViewController.m */; };
+		9740D43F196128AD00A8CF87 /* AddNewTweetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9740D43D196128AD00A8CF87 /* AddNewTweetViewController.xib */; };
+		9740D5E9196271BD00A8CF87 /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9740D5E7196271BD00A8CF87 /* TweetViewController.m */; };
+		9740D5EA196271BD00A8CF87 /* TweetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9740D5E8196271BD00A8CF87 /* TweetViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +86,12 @@
 		9740D4351961108500A8CF87 /* 01-refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "01-refresh.png"; path = "../../../../Downloads/glyphish-icons/PNG icons/01-refresh.png"; sourceTree = "<group>"; };
 		9740D4361961108500A8CF87 /* 02-redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "02-redo.png"; path = "../../../../Downloads/glyphish-icons/PNG icons/02-redo.png"; sourceTree = "<group>"; };
 		9740D4371961108500A8CF87 /* 28-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "28-star.png"; path = "../../../../Downloads/glyphish-icons/PNG icons/28-star.png"; sourceTree = "<group>"; };
+		9740D43B196128AD00A8CF87 /* AddNewTweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewTweetViewController.h; sourceTree = "<group>"; };
+		9740D43C196128AD00A8CF87 /* AddNewTweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewTweetViewController.m; sourceTree = "<group>"; };
+		9740D43D196128AD00A8CF87 /* AddNewTweetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddNewTweetViewController.xib; sourceTree = "<group>"; };
+		9740D5E6196271BD00A8CF87 /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetViewController.h; sourceTree = "<group>"; };
+		9740D5E7196271BD00A8CF87 /* TweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetViewController.m; sourceTree = "<group>"; };
+		9740D5E8196271BD00A8CF87 /* TweetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetViewController.xib; sourceTree = "<group>"; };
 		B0535851FEC14071B09F82CD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +158,8 @@
 		9740D3ED195FC0E800A8CF87 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				9740D5EC1962739100A8CF87 /* Cell */,
+				9740D5EB1962738400A8CF87 /* Model */,
 				9740D4351961108500A8CF87 /* 01-refresh.png */,
 				9740D4371961108500A8CF87 /* 28-star.png */,
 				9740D4361961108500A8CF87 /* 02-redo.png */,
@@ -163,11 +175,12 @@
 				9740D427195FEEEB00A8CF87 /* TweetsViewController.h */,
 				9740D428195FEEEB00A8CF87 /* TweetsViewController.m */,
 				9740D429195FEEEB00A8CF87 /* TweetsViewController.xib */,
-				9740D42C195FEF5500A8CF87 /* User.h */,
-				9740D42D195FEF5500A8CF87 /* User.m */,
-				9740D4301960E5C700A8CF87 /* TweetCell.h */,
-				9740D4311960E5C700A8CF87 /* TweetCell.m */,
-				9740D4321960E5C700A8CF87 /* TweetCell.xib */,
+				9740D43B196128AD00A8CF87 /* AddNewTweetViewController.h */,
+				9740D43C196128AD00A8CF87 /* AddNewTweetViewController.m */,
+				9740D43D196128AD00A8CF87 /* AddNewTweetViewController.xib */,
+				9740D5E6196271BD00A8CF87 /* TweetViewController.h */,
+				9740D5E7196271BD00A8CF87 /* TweetViewController.m */,
+				9740D5E8196271BD00A8CF87 /* TweetViewController.xib */,
 			);
 			path = Twitter;
 			sourceTree = "<group>";
@@ -208,6 +221,25 @@
 				9740D420195FC1C300A8CF87 /* TwitterClient.m */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		9740D5EB1962738400A8CF87 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9740D42C195FEF5500A8CF87 /* User.h */,
+				9740D42D195FEF5500A8CF87 /* User.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9740D5EC1962739100A8CF87 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9740D4301960E5C700A8CF87 /* TweetCell.h */,
+				9740D4311960E5C700A8CF87 /* TweetCell.m */,
+				9740D4321960E5C700A8CF87 /* TweetCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9740D43F196128AD00A8CF87 /* AddNewTweetViewController.xib in Resources */,
 				9740D4391961108500A8CF87 /* 02-redo.png in Resources */,
 				9740D4381961108500A8CF87 /* 01-refresh.png in Resources */,
 				9740D42B195FEEEB00A8CF87 /* TweetsViewController.xib in Resources */,
@@ -294,6 +327,7 @@
 				9740D3F2195FC0E800A8CF87 /* InfoPlist.strings in Resources */,
 				9740D3FD195FC0E800A8CF87 /* Images.xcassets in Resources */,
 				9740D41E195FC14000A8CF87 /* LoginViewController.xib in Resources */,
+				9740D5EA196271BD00A8CF87 /* TweetViewController.xib in Resources */,
 				9740D43A1961108500A8CF87 /* 28-star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,8 +381,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9740D41D195FC14000A8CF87 /* LoginViewController.m in Sources */,
+				9740D43E196128AD00A8CF87 /* AddNewTweetViewController.m in Sources */,
 				9740D42E195FEF5500A8CF87 /* User.m in Sources */,
 				9740D3F8195FC0E800A8CF87 /* AppDelegate.m in Sources */,
+				9740D5E9196271BD00A8CF87 /* TweetViewController.m in Sources */,
 				9740D42A195FEEEB00A8CF87 /* TweetsViewController.m in Sources */,
 				9740D421195FC1C300A8CF87 /* TwitterClient.m in Sources */,
 				9740D3F4195FC0E800A8CF87 /* main.m in Sources */,
