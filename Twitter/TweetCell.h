@@ -14,6 +14,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *profile_image_view;
 @property (strong, nonatomic) IBOutlet UILabel *text_label;
 @property (strong, nonatomic) IBOutlet UILabel *timestamp_label;
+@property (strong, nonatomic) IBOutlet UILabel *retweetLabel;
+- (IBAction)replyButton:(id)sender;
+- (IBAction)retweetButton:(id)sender;
+- (IBAction)favoriteButton:(id)sender;
+
 
 
 @end

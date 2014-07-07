@@ -22,4 +22,16 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)replyButton:(id)sender {
+    
+    NSLog(@"reply %@", sender);
+}
+
+- (IBAction)retweetButton:(id)sender {
+     NSLog(@"retweet");
+}
+
+- (IBAction)favoriteButton:(id)sender{
+     NSLog(@"favorite");
+}
 @end

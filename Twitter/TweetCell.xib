@@ -59,46 +59,55 @@
                         <fontDescription key="fontDescription" type="system" pointSize="9"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="02-redo.png" translatesAutoresizingMaskIntoConstraints="NO" id="188-TT-ySw">
-                        <rect key="frame" x="84" y="104" width="10" height="9"/>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zm-So-2d8">
+                        <rect key="frame" x="66" y="82" width="34" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="10" id="bm4-Ru-BID"/>
-                        </constraints>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="01-refresh.png" translatesAutoresizingMaskIntoConstraints="NO" id="nRL-IW-LEV">
-                        <rect key="frame" x="66" y="104" width="10" height="9"/>
+                        <state key="normal" title="reply">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="replyButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8J4-mZ-kKx"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mar-O0-FKT">
+                        <rect key="frame" x="122" y="82" width="51" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="10" id="fU0-5t-0xl"/>
-                        </constraints>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="28-star.png" translatesAutoresizingMaskIntoConstraints="NO" id="mWK-eS-udg">
-                        <rect key="frame" x="102" y="104" width="10" height="9"/>
+                        <state key="normal" title="retweet">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="retweetButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="X3e-LB-zSJ"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Dj-B3-530">
+                        <rect key="frame" x="204" y="82" width="51" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
+                        <state key="normal" title="favorite">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="favoriteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="aKy-Pb-cqA"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="retweeted" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OQC-sW-Ruo">
+                        <rect key="frame" x="66" y="6" width="77" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="sFj-l9-bs6" secondAttribute="trailing" constant="57" id="0Yb-hg-p8e"/>
                     <constraint firstItem="nsQ-i6-zjq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="28" id="4QM-ej-zBL"/>
                     <constraint firstAttribute="trailing" secondItem="dKb-se-kD0" secondAttribute="trailing" constant="9" id="8ae-xj-fyo"/>
-                    <constraint firstItem="188-TT-ySw" firstAttribute="top" secondItem="nRL-IW-LEV" secondAttribute="top" id="8xn-1F-fnx"/>
-                    <constraint firstItem="188-TT-ySw" firstAttribute="leading" secondItem="nRL-IW-LEV" secondAttribute="trailing" constant="8" symbolic="YES" id="CQI-2w-IGa"/>
-                    <constraint firstItem="mWK-eS-udg" firstAttribute="centerX" secondItem="WyS-J2-OE4" secondAttribute="centerX" id="Ebh-Ul-Npb"/>
                     <constraint firstItem="sFj-l9-bs6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="Fnb-Kr-S4y"/>
-                    <constraint firstItem="nRL-IW-LEV" firstAttribute="bottom" secondItem="188-TT-ySw" secondAttribute="bottom" id="MAj-kl-dkx"/>
-                    <constraint firstItem="mWK-eS-udg" firstAttribute="bottom" secondItem="188-TT-ySw" secondAttribute="bottom" id="Q7k-Sc-J0G"/>
                     <constraint firstItem="5E4-wu-UVd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="Qta-YZ-iHk"/>
                     <constraint firstItem="sFj-l9-bs6" firstAttribute="leading" secondItem="WyS-J2-OE4" secondAttribute="trailing" constant="8" symbolic="YES" id="V0a-4h-fj9"/>
                     <constraint firstItem="WyS-J2-OE4" firstAttribute="leading" secondItem="5E4-wu-UVd" secondAttribute="trailing" constant="8" symbolic="YES" id="cTz-dU-QRg"/>
-                    <constraint firstItem="mWK-eS-udg" firstAttribute="top" secondItem="188-TT-ySw" secondAttribute="top" id="e2N-25-AHI"/>
                     <constraint firstItem="dKb-se-kD0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="48" id="h0y-QO-fB5"/>
                     <constraint firstItem="dKb-se-kD0" firstAttribute="leading" secondItem="5E4-wu-UVd" secondAttribute="trailing" constant="8" id="kBY-6e-YZy"/>
                     <constraint firstAttribute="trailing" secondItem="nsQ-i6-zjq" secondAttribute="trailing" constant="9" id="m7s-WA-WjH"/>
                     <constraint firstItem="5E4-wu-UVd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="27" id="mzj-Zc-d0H"/>
-                    <constraint firstItem="mWK-eS-udg" firstAttribute="top" secondItem="dKb-se-kD0" secondAttribute="bottom" constant="35" id="ogu-1C-gQS"/>
-                    <constraint firstAttribute="bottom" secondItem="nRL-IW-LEV" secondAttribute="bottom" constant="10" id="tNG-gs-1Va"/>
-                    <constraint firstItem="mWK-eS-udg" firstAttribute="leading" secondItem="188-TT-ySw" secondAttribute="trailing" constant="8" symbolic="YES" id="ttV-6m-rbs"/>
                     <constraint firstItem="WyS-J2-OE4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" symbolic="YES" id="uy7-Zo-aZ5"/>
                     <constraint firstItem="sFj-l9-bs6" firstAttribute="baseline" secondItem="WyS-J2-OE4" secondAttribute="baseline" id="yuf-sU-O9X"/>
                     <constraint firstItem="nsQ-i6-zjq" firstAttribute="centerY" secondItem="sFj-l9-bs6" secondAttribute="centerY" id="zsn-Go-rsT"/>
@@ -107,15 +116,11 @@
             <connections>
                 <outlet property="name_label" destination="WyS-J2-OE4" id="gyn-e2-7dp"/>
                 <outlet property="profile_image_view" destination="5E4-wu-UVd" id="g6n-Zr-sAb"/>
+                <outlet property="retweetLabel" destination="OQC-sW-Ruo" id="Rch-Ws-rzD"/>
                 <outlet property="screen_name_label" destination="sFj-l9-bs6" id="nBm-Af-CSS"/>
                 <outlet property="text_label" destination="dKb-se-kD0" id="FDK-J1-RkW"/>
                 <outlet property="timestamp_label" destination="nsQ-i6-zjq" id="ern-3m-H52"/>
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="01-refresh.png" width="24" height="26"/>
-        <image name="02-redo.png" width="30" height="26"/>
-        <image name="28-star.png" width="26" height="26"/>
-    </resources>
 </document>

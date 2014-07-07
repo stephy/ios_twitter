@@ -36,16 +36,15 @@ int const BUTTON_WIDTH = 70;
 {
     [super viewDidLoad];
     
-    UIColor *mainColor = [UIColor colorWithRed:0.212 green:0.212 blue:0.192 alpha:1]; /*#363631*/
-    
+    UIColor *mainColor = [UIColor colorWithRed:13/255.0f green:105/255.0f blue:255/255.0f alpha:1.0f];
     //creating signout button
     self.signoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, BUTTON_WIDTH, BUTTON_HEIGHT)];
     [self.signoutButton setTitle:@"Sign Out" forState:UIControlStateNormal];
-    [self.signoutButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    [self.signoutButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     //creating button to add a new tweet
     self.addTweetButton = [[UIButton alloc] initWithFrame:CGRectMake(250, 0.0, BUTTON_WIDTH, BUTTON_HEIGHT)];
     [self.addTweetButton setTitle:@"New" forState:UIControlStateNormal];
-    [self.addTweetButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    [self.addTweetButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     
     //adding action to buttons
     [self.addTweetButton addTarget:self action:@selector(onAddTweetButton) forControlEvents:UIControlEventTouchDown];
@@ -91,7 +90,17 @@ int const BUTTON_WIDTH = 70;
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     
     NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
+    
     //NSLog(@"tweet: %@", tweet);
+    //check to see if tweet has been retweeted
+    if ([@"0" isEqualToString:tweet[@"retweeted"]]) {
+        //show retweeted label
+        cell.retweetLabel.text =@"somebody retweeted this";
+    }else{
+        //don't show retweeted label
+        cell.retweetLabel.text = @"";
+    }
+    
     cell.name_label.text = tweet[@"user"][@"name"];
     NSMutableString *screen_name = [[NSMutableString alloc]init];
     [screen_name appendString:@"@"];

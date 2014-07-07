@@ -40,15 +40,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //to be able to count chars
     self.tweetTextView.delegate = self;
+    
+    UIColor *mainColor = [UIColor colorWithRed:13/255.0f green:105/255.0f blue:255/255.0f alpha:1.0f];
     //creating signout button
-    self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0,90, 70, 40)];
+    self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(-10, 90, 70, 40)];
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [self.cancelButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    [self.cancelButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     //creating button to add a new tweet
     self.tweetButton = [[UIButton alloc] initWithFrame:CGRectMake(250, 90, 70, 40)];
     [self.tweetButton setTitle:@"Tweet" forState:UIControlStateNormal];
-    [self.tweetButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    [self.tweetButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     
     //adding action to buttons
     [self.cancelButton addTarget:self action:@selector(onCancelButton) forControlEvents:UIControlEventTouchDown];
@@ -67,6 +70,7 @@
     
     [self loadUser];
     self.navigationItem.titleView = barView;
+    self.navigationController.navigationBar.barTintColor = mainColor;
 
 
 }
