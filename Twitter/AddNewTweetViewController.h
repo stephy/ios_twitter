@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AFNetworking/UIKit+AFNetworking.h>
 
-@interface AddNewTweetViewController : UIViewController
+@interface AddNewTweetViewController : UIViewController <UITextViewDelegate>
 
 @end

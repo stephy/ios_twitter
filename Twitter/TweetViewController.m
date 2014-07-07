@@ -52,7 +52,6 @@
 
     
     //favorites count
-    
      NSString *strFromInt2 = [NSString stringWithFormat:@"%@",self.currentTweet[@"user"][@"favourites_count"]];
     self.favoritesCountLabel.text = strFromInt2;
     

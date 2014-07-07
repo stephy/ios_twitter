@@ -9,6 +9,7 @@
 #import "AddNewTweetViewController.h"
 #import "User.h"
 #import "TwitterClient.h"
+
 //int const BAR_HEIGHT = 40;
 //int const BAR_WIDTH = 230;
 //int const BUTTON_HEIGHT = 40;
@@ -16,7 +17,8 @@
 
 @interface AddNewTweetViewController ()
 
-@property (strong, nonatomic) IBOutlet UITextField *tweet_text_field;
+@property (strong, nonatomic) IBOutlet UILabel *charCounterLabel;
+@property (strong, nonatomic) IBOutlet UITextView *tweetTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *thumb_img;
 @property (strong, nonatomic) IBOutlet UILabel *name_label;
 @property (strong, nonatomic) IBOutlet UILabel *screen_name_label;
@@ -38,6 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tweetTextView.delegate = self;
     //creating signout button
     self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0,90, 70, 40)];
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
@@ -50,16 +53,22 @@
     //adding action to buttons
     [self.cancelButton addTarget:self action:@selector(onCancelButton) forControlEvents:UIControlEventTouchDown];
     [self.tweetButton addTarget:self action:@selector(onTweetButton) forControlEvents:UIControlEventTouchDown];
+    
+    //character counter
+    self.charCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(200,90, 70, 40)];
+    self.charCounterLabel.text = @"140";
     //creating a view
     UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300, 230)];
     
     [barView addSubview:self.cancelButton];
     [barView addSubview:self.tweetButton];
+    [barView addSubview:self.charCounterLabel];
     
+    
+    [self loadUser];
     self.navigationItem.titleView = barView;
-    
-    User *currentUser = [User currentUser];
-    self.screen_name_label.text = currentUser.screen_name;
+
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,8 +84,7 @@
 
 - (void)onTweetButton{
     //post tweet
-    NSLog(@"post tweet");
-    NSString *tweet = self.tweet_text_field.text;
+    NSString *tweet = self.tweetTextView.text;
     TwitterClient *client = [TwitterClient instance];
     [client tweetWithText:tweet
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -89,6 +97,44 @@
         //alert error
     }];
     
+}
+
+- (void)loadUser {
+    TwitterClient *client = [TwitterClient instance];
+    
+    User *currentUser = [User currentUser];
+    self.screen_name_label.text = currentUser.screen_name;
+    
+    [client getUserWithID:currentUser.screen_name success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *user = [responseObject objectAtIndex:0];
+        NSLog(@"user loaded successfully, response: %@", user);
+        self.name_label.text = user[@"name"];
+        
+        NSString *profile_image_url = user[@"profile_image_url"];
+       [self.thumb_img setImageWithURL: [NSURL URLWithString:profile_image_url]];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error");
+    }];
+
+}
+
+- (void)textViewDidChange:(UITextView *)textView{
+    NSLog(@"Dilip : %@",textView.text);
+    int len = textView.text.length;
+    self.charCounterLabel.text=[NSString stringWithFormat:@"%i",140-len];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if([text length] == 0){
+        if([textView.text length] != 0){
+            return YES;
+        }
+    }else if([[textView text] length] > 139){
+        return NO;
+    }
+    return YES;
 }
 
 

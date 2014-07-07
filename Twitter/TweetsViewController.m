@@ -57,6 +57,11 @@ int const BUTTON_WIDTH = 70;
     [barView addSubview:self.addTweetButton];
     
     self.navigationItem.titleView = barView;
+    
+    //adding pull to refresh feature
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 
     //load personalized cell
     //registration process
@@ -172,6 +177,10 @@ int const BUTTON_WIDTH = 70;
     LoginViewController *lvc = [[LoginViewController alloc] init];
     [self presentViewController:lvc animated:YES completion:nil];
     
+}
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    [refreshControl endRefreshing];
 }
 
 
