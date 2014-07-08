@@ -18,7 +18,8 @@
 - (IBAction)replyButton:(id)sender;
 - (IBAction)retweetButton:(id)sender;
 - (IBAction)favoriteButton:(id)sender;
-
-
+@property (strong, nonatomic) IBOutlet UIButton *replyButton;
+@property (strong, nonatomic) IBOutlet UIButton *retweetButton;
+@property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
 
 @end

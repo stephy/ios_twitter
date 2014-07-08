@@ -18,6 +18,7 @@ int const BUTTON_WIDTH = 70;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIButton *addTweetButton;
 @property (strong, nonatomic) UIButton *signoutButton;
+@property (strong, nonatomic) NSMutableArray *favorites;
 
 @end
 
@@ -27,7 +28,7 @@ int const BUTTON_WIDTH = 70;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -35,7 +36,7 @@ int const BUTTON_WIDTH = 70;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.tableView reloadData];
     UIColor *mainColor = [UIColor colorWithRed:13/255.0f green:105/255.0f blue:255/255.0f alpha:1.0f];
     //creating signout button
     self.signoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, BUTTON_WIDTH, BUTTON_HEIGHT)];
@@ -61,12 +62,15 @@ int const BUTTON_WIDTH = 70;
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-
+    
     //load personalized cell
     //registration process
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"TweetCell"];
     //set row height
     self.tableView.rowHeight = 120;
+    
+    //initialize favorites array
+    self.favorites = [[NSMutableArray alloc] initWithCapacity:20];
     
     //change navigation controller color
     self.navigationController.navigationBar.barTintColor = mainColor;
@@ -90,8 +94,9 @@ int const BUTTON_WIDTH = 70;
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     
     NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
+    [self.favorites insertObject:tweet[@"favorited"] atIndex:indexPath.row];
     
-    //NSLog(@"tweet: %@", tweet);
+    //NSLog(@"tweet: %@", tweet[@"favorited"]);
     //check to see if tweet has been retweeted
     if ([@"0" isEqualToString:tweet[@"retweeted"]]) {
         //show retweeted label
@@ -113,6 +118,22 @@ int const BUTTON_WIDTH = 70;
     cell.text_label.text = tweet[@"text"];
     
     cell.timestamp_label.text = [self retrivePostTime:tweet[@"created_at"]];
+    
+    //adding button event handlers
+    [cell.replyButton setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
+    [cell.replyButton addTarget:self action:@selector(onTweetReply:event:) forControlEvents:UIControlEventTouchDown];
+    
+    [cell.retweetButton setImage:[UIImage imageNamed:@"02-redo.png"] forState:UIControlStateNormal];
+    [cell.retweetButton addTarget:self action:@selector(onRetweet:event:) forControlEvents:UIControlEventTouchDown];
+    
+    
+    //button states
+    //user has not favorited the tweet
+    
+    [cell.favoriteButton setImage:[UIImage imageNamed:@"28-star.png"] forState:UIControlStateNormal];
+    [cell.favoriteButton addTarget:self action:@selector(onTweetFavorite:event:) forControlEvents:UIControlEventTouchDown];
+    
+    
     
     return cell;
 }
@@ -161,7 +182,7 @@ int const BUTTON_WIDTH = 70;
     //dismiss keyboard
     
     NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
-
+    
     TweetViewController *tvc = [[TweetViewController alloc] initWithNibName:@"TweetViewController" bundle:[NSBundle mainBundle]];
     tvc.currentTweet = tweet;
     [self.navigationController pushViewController:tvc animated:YES];
@@ -189,8 +210,94 @@ int const BUTTON_WIDTH = 70;
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
+    [self loadData];
     [refreshControl endRefreshing];
 }
 
+- (void)onTweetReply:(id)sender event:(id)event{
+    NSLog(@"reply tweet");
+    CGPoint touchPosition = [[[event allTouches] anyObject] locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPosition];
+    if (indexPath != nil){
+        NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
+        NSLog(@"tweet: %@", tweet[@"id"]);
+        //do Something here
+    }
+}
+
+- (void)onTweetFavorite:(id)sender event:(id)event{
+    NSLog(@"destroy favorite tweet");
+    CGPoint touchPosition = [[[event allTouches] anyObject] locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPosition];
+    if (indexPath != nil){
+        NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
+        
+        TwitterClient *client = [TwitterClient instance];
+        
+        if ( (int)[self.favorites objectAtIndex:indexPath.row] == 1) {
+            //destroy it
+            [client favoritesDestroyId:tweet[@"id"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                //favorited, change button state
+                NSLog(@"favorite destroyed");
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"error when destroying a favorite");
+            }];
+            
+        }else{
+            //favorite it
+            [client favoritesCreateId:tweet[@"id"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                //favorited, change button state
+                NSLog(@"favorited");
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"error when creating a favorite");
+            }];
+        }
+        
+    }
+}
+
+- (void)onRetweet:(id)sender event:(id)event{
+    NSLog(@"Retweet");
+    CGPoint touchPosition = [[[event allTouches] anyObject] locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPosition];
+    if (indexPath != nil){
+        NSDictionary *tweet = [self.timeline objectAtIndex:indexPath.row];
+        NSString *url = [NSString stringWithFormat:@"%@%@%@", @"https://api.twitter.com/1.1/statuses/retweet/",tweet[@"id"],@".json"];
+        NSLog(@"url: %@", url);
+        NSLog(@"tweet: %@", tweet[@"id"]);
+        TwitterClient *client = [TwitterClient instance];
+        
+        [client retweetURL:url success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"retweeted successfully");
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error retweeting");
+        }];
+        
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    // here you can reload needful views, for example, tableView:
+    [self.tableView reloadData];
+}
+
+
+-(void)loadData {
+    TwitterClient *client = [TwitterClient instance];
+    [self loadTimeline:client];
+    [self.tableView reloadData];
+}
+
+- (void)loadTimeline:(TwitterClient *)client{
+    [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"loaded timeline with success");
+        self.timeline = responseObject;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"homeTimeline response error");
+        self.timeline = nil;
+        
+    }];
+}
 
 @end

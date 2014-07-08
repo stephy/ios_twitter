@@ -125,7 +125,6 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-    NSLog(@"Dilip : %@",textView.text);
     int len = textView.text.length;
     self.charCounterLabel.text=[NSString stringWithFormat:@"%i",140-len];
 }
@@ -140,6 +139,8 @@
     }
     return YES;
 }
+
+
 
 
 @end

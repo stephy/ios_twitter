@@ -23,7 +23,6 @@
 }
 
 - (IBAction)replyButton:(id)sender {
-    
     NSLog(@"reply %@", sender);
 }
 
@@ -34,4 +33,5 @@
 - (IBAction)favoriteButton:(id)sender{
      NSLog(@"favorite");
 }
+
 @end

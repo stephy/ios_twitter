@@ -60,9 +60,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zm-So-2d8">
-                        <rect key="frame" x="66" y="82" width="34" height="30"/>
+                        <rect key="frame" x="66" y="82" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="reply">
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -70,9 +70,9 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mar-O0-FKT">
-                        <rect key="frame" x="122" y="82" width="51" height="30"/>
+                        <rect key="frame" x="120" y="82" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="retweet">
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -80,9 +80,9 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Dj-B3-530">
-                        <rect key="frame" x="204" y="82" width="51" height="30"/>
+                        <rect key="frame" x="171" y="82" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="favorite">
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -114,8 +114,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="favoriteButton" destination="9Dj-B3-530" id="D5z-Wt-8mg"/>
                 <outlet property="name_label" destination="WyS-J2-OE4" id="gyn-e2-7dp"/>
                 <outlet property="profile_image_view" destination="5E4-wu-UVd" id="g6n-Zr-sAb"/>
+                <outlet property="replyButton" destination="0zm-So-2d8" id="2fw-SD-96L"/>
+                <outlet property="retweetButton" destination="Mar-O0-FKT" id="ssK-K4-grC"/>
                 <outlet property="retweetLabel" destination="OQC-sW-Ruo" id="Rch-Ws-rzD"/>
                 <outlet property="screen_name_label" destination="sFj-l9-bs6" id="nBm-Af-CSS"/>
                 <outlet property="text_label" destination="dKb-se-kD0" id="FDK-J1-RkW"/>
